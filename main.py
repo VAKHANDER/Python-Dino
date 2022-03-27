@@ -11,9 +11,9 @@ Menu1_surf = pygame.image.load('tiles\\Menu1.png')
 screen.blit(Menu1_surf, (0,0))
 
 while True:
+    # Обновили дисплей
+    pygame.display.update()
     for event in pygame.event.get():
-        # Обновили дисплей
-        pygame.display.update()
         if event.type == pygame.QUIT:
             # Завершаем работу модулей
             pygame.quit()
