@@ -4,14 +4,12 @@ import sys
 # Обязательная строчка во всех программах - играх, для подготовки модулей к работе
 pygame.init()
 
-def Menu1():
+def Menu1(width, height):
     # загрузили изображение
     Menu1_surf = pygame.image.load('tiles\\Menu1.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
 # ----------------------------------------------Задание текста----------------------------------------------------------
-    # Белый цвет
-    color = (255, 255, 255)
     # светлый оттенок кнопки
     color_light = (170, 170, 170)
     # темный оттенок кнопки при нажатии
@@ -19,7 +17,7 @@ def Menu1():
     # Настройки шрифта кнопки
     smallfont = pygame.font.SysFont('Times New Roman', 35)
     # Рендеринг текста с параметрами, опсианными выше
-    text = smallfont.render('Выход', True, color)
+    text = smallfont.render('Выход', True, color_light)
 # ----------------------------------------------------------------------------------------------------------------------
     while True:
         # Записываем в массив mouse_pos координаты (x, y) курсора
@@ -39,7 +37,12 @@ def Menu1():
                     # заврешаем работу программы
                     sys.exit()
                 if width / 2 - 50 <= mouse_pos[0] <=width / 2 + 20 and height / 2 <= mouse_pos[1] <= height / 2 + 50:
-                    Settings()
+                    # загрузили изображение
+                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    # Передали изображение в дисплей
+                    screen.blit(tmp_surf, (0, 0))
+                    Settings(width, height)
+                    screen.blit(Menu1_surf, (0, 0))
             # ----------------- Если курсор наведен на текст, он меняет свой оттенок -----------------------------------
             if width / 2 - 25 <= mouse_pos[0] <= width /2 + 20 and height / 2 + 140 <= mouse_pos[1] <= height / 2 + 200:
                 color_exit = color_dark
@@ -81,27 +84,83 @@ def Menu2():
     screen.blit(Menu1_surf, (0, 0))
 
 
-def Settings():
+def Settings(width, height):
     # загрузили изображение
     Menu1_surf = pygame.image.load('tiles\\Settings.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
+    # светлый оттенок кнопки
+    color_light = (170, 170, 170)
+    # темный оттенок кнопки при нажатии
+    color_dark = (100, 100, 100)
+    smallfont = pygame.font.SysFont('Times New Roman', 35)
+    while True:
+        # Записываем в массив mouse_pos координаты (x, y) курсора
+        mouse_pos = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                # Завершаем работу модулей
+                pygame.quit()
+                # заврешаем работу программы
+                sys.exit()
+            # Проверяет нажата ли кнопка мыши
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if (width/2 - 600 <= mouse_pos[0] <= width/2 - 550) and (height/2 - 300 < mouse_pos[1] < height/2 - 250):
+                    # загрузили изображение
+                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    # Передали изображение в дисплей
+                    screen.blit(tmp_surf, (0, 0))
+                    return width, height
+                elif (width/2 - 50 <= mouse_pos[0] <= width/2) and (height/2 - 100 < mouse_pos[1] < height/2 - 50):
+                    pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+                    screen.blit(Menu1_surf, (0, 0))
+                elif (width/2 + 85 <= mouse_pos[0] <= width/2 + 135) and (height/2 - 100 < mouse_pos[1] < height/2 - 50):
+                    pygame.display.toggle_fullscreen()
+                    screen.blit(Menu1_surf, (0, 0))
+            if (width/2 - 600 <= mouse_pos[0] <= width/2 - 550) and (height/2 - 300 < mouse_pos[1] < height/2 - 250):
+                color_back = color_dark
+            else:
+                color_back = color_light
+            if (width/2 - 50 <= mouse_pos[0] <= width/2) and (height/2 - 100 < mouse_pos[1] < height/2 - 50):
+                color_fullscreen_yes = color_dark
+            else:
+                color_fullscreen_yes = color_light
+            if (width / 2 + 85 <= mouse_pos[0] <= width/2 + 135) and (height/2 - 100 < mouse_pos[1] < height/2 - 50):
+                color_fullscreen_no = color_dark
+            else:
+                color_fullscreen_no = color_light
+            # Рендеринг текста с параметрами, опсианными выше
+            back_Menu1 = smallfont.render('<', True, color_back)
+            Fullscreen = smallfont.render('Fullscreen:              \\', True, color_light)
+            Fullscreen_yes = smallfont.render('yes', True, color_fullscreen_yes)
+            Fullscreen_no = smallfont.render('no', True, color_fullscreen_no)
+            # Кидаем текст на экран
+            screen.blit(back_Menu1, (width/2 - 600, height/2 - 300))
+            screen.blit(Fullscreen, (width / 2 - 250, height / 2 - 100))
+            screen.blit(Fullscreen_yes, (width / 2 - 50, height / 2 - 100))
+            screen.blit(Fullscreen_no, (width / 2 + 85, height / 2 - 100))
+            # Обновили дисплей
+            pygame.display.update()
 
 # Создаем окно screen с разрешением - 1280х720
 width = 1280
 height = 720
+# экран = pygame.display.set_mode((width, height), pygame.FULLSCREEN) - полноэкранный режим
+# pygame.display.toggle_fullscreen() - меняет режим экрана на в окне / полноэкр.
 screen = pygame.display.set_mode((width, height))
 
 # ----------------------------------------------Задание текста----------------------------------------------------------
 # Белый цвет
-#color = (255, 255, 255)
+# color = (255, 255, 255)
 # светлый оттенок кнопки
-#color_light = (170, 170, 170)
+# color_light = (170, 170, 170)
 # темный оттенок кнопки при нажатии
-#color_dark = (100, 100, 100)
+# color_dark = (100, 100, 100)
 # Настройки шрифта кнопки
-#smallfont = pygame.font.SysFont('Times New Roman', 35)
+# smallfont = pygame.font.SysFont('Times New Roman', 35)
 # Рендеринг текста с параметрами, опсианными выше
-#text = smallfont.render('Mytext', True, color)
+# text = smallfont.render('Mytext', True, color)
+# Кидаем текст на экран
+# screen.blit(text, (x, y))
 # ----------------------------------------------------------------------------------------------------------------------
-Menu1()
+Menu1(width, height)
