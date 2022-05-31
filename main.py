@@ -43,6 +43,12 @@ def Menu1(width, height):
                     screen.blit(tmp_surf, (0, 0))
                     Settings(width, height)
                     screen.blit(Menu1_surf, (0, 0))
+                if width / 2 - 25 <= mouse_pos[0] <= width/2 + 20 and height /2 - 160 <= mouse_pos[1] <= height/2 - 100:
+                    # Завершаем работу модулей
+                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    screen.blit(tmp_surf, (0, 0))
+                    Game()
+                    screen.blit(Menu1_surf, (0, 0))
             # ----------------- Если курсор наведен на текст, он меняет свой оттенок -----------------------------------
             if width / 2 - 25 <= mouse_pos[0] <= width /2 + 20 and height / 2 + 140 <= mouse_pos[1] <= height / 2 + 200:
                 color_exit = color_dark
@@ -52,12 +58,17 @@ def Menu1(width, height):
                 color_settings = color_dark
             else:
                 color_settings = color_light
+            if width / 2 - 25 <= mouse_pos[0] <= width /2 + 20 and height / 2 - 160 <= mouse_pos[1] <= height / 2 - 100:
+                color_play = color_dark
+            else:
+                color_play = color_light
             # ----------------------------------------------------------------------------------------------------------
             # Рендеринг текста с параметрами, опсианными выше
             Exit = smallfont.render('Exit', True, color_exit)
-            # Рендеринг текста с параметрами, опсианными выше
+            Play = smallfont.render('Play', True, color_play)
             goto_settings = smallfont.render('Settings', True, color_settings)
-            # Наложение текста на кнопку
+            # Закидываем объект с текстом на экран
+            screen.blit(Play, (width / 2 - 25, height /2 - 150))
             screen.blit(Exit, (width / 2 - 25, height / 2 + 150))
             screen.blit(goto_settings, (width / 2 - 50, height / 2))
             # Обновили дисплей
@@ -65,9 +76,52 @@ def Menu1(width, height):
 
 def Game():
     # загрузили изображение
-    Menu1_surf = pygame.image.load('tiles\\Game.png')
+    Game_surf1 = pygame.image.load('tiles\\Game\\Background.png')
+    Game_surf2 = pygame.image.load('tiles\\Game\\Background2.png')
+    Dino = pygame.image.load('tiles\\Game\\Dino1.png')
+    x1 = 0
+    x2 = 1280
+    y_dino = 480
+    speed = 5
+    flag = 0
     # Передали изображение в дисплей
-    screen.blit(Menu1_surf, (0, 0))
+    screen.blit(Game_surf1, (x1, 0))
+    screen.blit(Game_surf2, (x2, 0))
+    screen.blit(Dino, (100, y_dino))
+    FPS = pygame.time.Clock()
+    # Количество fps
+    fps = 75
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                # Завершаем работу модулей
+                pygame.quit()
+                # заврешаем работу программы
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    flag = 80
+        screen.blit(Game_surf1, (x1, 0))
+        screen.blit(Game_surf2, (x2, 0))
+        screen.blit(Dino, (100, y_dino))
+        # Реализация прыжка
+        if flag != 0:
+            if flag > 40:
+                y_dino = y_dino - 4
+            elif flag < 41:
+                if y_dino > 480 or y_dino != 480:
+                    y_dino = y_dino + 4
+            flag = flag - 1
+        if flag == 0:
+            y_dino = 480
+        if x1 < -1280:
+            x1 = 1280
+        if x2 < -1280:
+            x2 = 1280
+        x1 = x1 - speed
+        x2 = x2 - speed
+        FPS.tick(fps)
+        pygame.display.update()
 
 
 def Loose():
