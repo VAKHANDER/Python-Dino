@@ -101,6 +101,8 @@ def Game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     flag = 80
+                if event.key == pygame.K_ESCAPE:
+                    Menu2()
         screen.blit(Game_surf1, (x1, 0))
         screen.blit(Game_surf2, (x2, 0))
         screen.blit(Dino, (100, y_dino))
@@ -136,6 +138,46 @@ def Menu2():
     Menu1_surf = pygame.image.load('tiles\\Menu2.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
+    pygame.display.update()
+    color_light = (170, 170, 170)
+    # темный оттенок кнопки при нажатии
+    color_dark = (100, 100, 100)
+    smallfont = pygame.font.SysFont('Times New Roman', 35)
+    mouse_pos = []
+    while True:
+        screen.blit(Menu1_surf, (0, 0))
+        mouse_pos = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if (width/2 + 40 >= mouse_pos[0] >= width/2 - 80) and (height/2 - 90 >= mouse_pos[1] >= height/2 - 140):
+                    return
+                elif (width/2 + 50 >= mouse_pos[0] >= width/2 - 70) and (height/2 + 30 >= mouse_pos[1] >= height/2 -20):
+                    Settings(width, height)
+                elif (width/2 + 80 >= mouse_pos[0] >= width/2 - 40) and (height/2 + 150>=mouse_pos[1]>=height/2 + 100):
+                    pygame.quit()
+                    sys.exit()
+        if (width/2 + 40 >= mouse_pos[0] >= width/2 - 80) and (height/2 - 90 >= mouse_pos[1] >= height/2 - 140):
+            color_continue = color_dark
+        else:
+            color_continue = color_light
+        if (width/2 + 50 >= mouse_pos[0] >= width/2 - 70) and (height/2 + 30 >= mouse_pos[1] >= height/2 -20):
+            color_setting = color_dark
+        else:
+            color_setting = color_light
+        if (width/2 + 80 >= mouse_pos[0] >= width/2 - 40) and (height/2 + 150 >= mouse_pos[1] >= height/2 + 100):
+            color_exit = color_dark
+        else:
+            color_exit = color_light
+        Continue = smallfont.render("continue", True, color_continue)
+        Setting = smallfont.render("settings", True, color_setting)
+        Exit = smallfont.render("exit", True, color_exit)
+        screen.blit(Setting, (width/2 - 70, height/2 - 20))
+        screen.blit(Exit, (width/2 - 45, height/2 + 100))
+        screen.blit(Continue, (width/2 - 80, height/2 - 140))
+        pygame.display.update()
 
 
 def Settings(width, height):
