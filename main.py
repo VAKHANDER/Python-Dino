@@ -1,5 +1,6 @@
 import pygame
 import sys
+from random import randint
 
 # Обязательная строчка во всех программах - играх, для подготовки модулей к работе
 pygame.init()
@@ -79,8 +80,17 @@ def Game():
     Game_surf1 = pygame.image.load('tiles\\Game\\Background.png')
     Game_surf2 = pygame.image.load('tiles\\Game\\Background2.png')
     Dino = pygame.image.load('tiles\\Game\\Dino1.png')
+    Kaktus1 = pygame.image.load('tiles\\Game\\Kaktus1.png')
+    Kaktus2 = pygame.image.load('tiles\\Game\\Kaktus2.png')
+    Kaktus3 = pygame.image.load('tiles\\Game\\Kaktus3.png')
+    tmp = pygame.image.load('tiles\\Game\\tmp.png')
+    kaktus = 0
+    color_light = (170, 170, 170)
+    Score_text = pygame.font.SysFont('Times New Roman', 35)
     x1 = 0
     x2 = 1280
+    x3 = 1280
+    score = 0
     y_dino = 480
     speed = 5
     flag = 0
@@ -103,9 +113,25 @@ def Game():
                     flag = 80
                 if event.key == pygame.K_ESCAPE:
                     Menu2()
+        if (score + speed) % 500 == 0 or speed % 500 == 0:
+            kaktus = randint(1, 3)
+            if kaktus == 1:
+                Game_surf1.blit(Kaktus1, (x3, 380))
+                print("кактус появился")
+                kaktus = 0
+            elif kaktus == 2:
+                Game_surf1.blit(Kaktus2, (x3, 380))
+                print("кактус появился")
+                kaktus = 0
+            else:
+                Game_surf1.blit(Kaktus3, (x3, 380))
+                print("кактус появился")
+                kaktus = 0
         screen.blit(Game_surf1, (x1, 0))
         screen.blit(Game_surf2, (x2, 0))
         screen.blit(Dino, (100, y_dino))
+        score2 = Score_text.render(str(int(score//100)), True, color_light)
+        screen.blit(score2, (height/2 + 800, width/2 - 600))
         # Реализация прыжка
         if flag != 0:
             if flag > 40:
@@ -118,10 +144,19 @@ def Game():
             y_dino = 480
         if x1 < -1280:
             x1 = 1280
+            # Надо стереть задний фон, чтобы убрать старые кактусы
+            Game_surf1.blit(tmp, (x1, 0))
         if x2 < -1280:
             x2 = 1280
+        # Координата кактуса
+        if x3 < -1280:
+            x3 = 1280
         x1 = x1 - speed
         x2 = x2 - speed
+        x3 = x3 - speed
+        score = score + speed
+        if score % 1000 == 0:
+            speed = speed + 0.5
         FPS.tick(fps)
         pygame.display.update()
 
@@ -157,8 +192,7 @@ def Menu2():
                 elif (width/2 + 50 >= mouse_pos[0] >= width/2 - 70) and (height/2 + 30 >= mouse_pos[1] >= height/2 -20):
                     Settings(width, height)
                 elif (width/2 + 80 >= mouse_pos[0] >= width/2 - 40) and (height/2 + 150>=mouse_pos[1]>=height/2 + 100):
-                    pygame.quit()
-                    sys.exit()
+                    Menu1(width, height)
         if (width/2 + 40 >= mouse_pos[0] >= width/2 - 80) and (height/2 - 90 >= mouse_pos[1] >= height/2 - 140):
             color_continue = color_dark
         else:
