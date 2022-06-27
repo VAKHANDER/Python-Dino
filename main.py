@@ -89,7 +89,6 @@ def Game():
     Score_text = pygame.font.SysFont('Times New Roman', 35)
     x1 = 0
     x2 = 1280
-    x3 = 1280
     score = 0
     y_dino = 480
     speed = 5
@@ -113,23 +112,22 @@ def Game():
                     flag = 80
                 if event.key == pygame.K_ESCAPE:
                     Menu2()
-        if (score + speed) % 500 == 0 or speed % 500 == 0:
-            kaktus = randint(1, 3)
-            if kaktus == 1:
-                Game_surf1.blit(Kaktus1, (x3, 380))
-                print("кактус появился")
-                kaktus = 0
-            elif kaktus == 2:
-                Game_surf1.blit(Kaktus2, (x3, 380))
-                print("кактус появился")
-                kaktus = 0
-            else:
-                Game_surf1.blit(Kaktus3, (x3, 380))
-                print("кактус появился")
-                kaktus = 0
         screen.blit(Game_surf1, (x1, 0))
         screen.blit(Game_surf2, (x2, 0))
         screen.blit(Dino, (100, y_dino))
+        if kaktus == 1:
+            screen.blit(Kaktus1, (x1, 480))
+            if x1 < -1280:
+                kaktus = 0
+        elif kaktus == 2:
+            screen.blit(Kaktus2, (x1, 480))
+            kaktus = 0
+            if x1 < -1280:
+                kaktus = 0
+        elif kaktus == 3:
+            screen.blit(Kaktus3, (x1, 480))
+            if x1 < -1280:
+                kaktus = 0
         score2 = Score_text.render(str(int(score//100)), True, color_light)
         screen.blit(score2, (height/2 + 800, width/2 - 600))
         # Реализация прыжка
@@ -148,15 +146,14 @@ def Game():
             Game_surf1.blit(tmp, (x1, 0))
         if x2 < -1280:
             x2 = 1280
-        # Координата кактуса
-        if x3 < -1280:
-            x3 = 1280
         x1 = x1 - speed
         x2 = x2 - speed
-        x3 = x3 - speed
         score = score + speed
         if score % 1000 == 0:
             speed = speed + 0.5
+        if (score + speed) % 500 == 0 or speed % 500 == 0 or score % 500 == 0 and kaktus == 0:
+            kaktus = randint(1, 3)
+            print(kaktus)
         FPS.tick(fps)
         pygame.display.update()
 
