@@ -149,11 +149,26 @@ def Game():
         x1 = x1 - speed
         x2 = x2 - speed
         score = score + speed
+        if (130 == x1 - 25):
+            print(1)
+            print((175 == x1 - 25))
+            print(y_dino <= 455)
+            if y_dino >= 455:
+                print("True, x1 - 25 = ", x1, "; y_dino =", y_dino)
+                Loose()
+        elif (60 <= x1 + 25) and (130 >= x1 - 25):
+            print(2)
+            print((60 <= x1 + 25))
+            print(y_dino >= 455)
+            if y_dino >= 455:
+                print("True, x1 + 25 = ", x1, "; y_dino =", y_dino)
+                Loose()
         if score % 1000 == 0:
             speed = speed + 0.5
+        # Разобрать со спавном кактусов
         if (score + speed) % 500 == 0 or speed % 500 == 0 or score % 500 == 0 and kaktus == 0:
             kaktus = randint(1, 3)
-            print(kaktus)
+            print("kaktus = ", kaktus)
         FPS.tick(fps)
         pygame.display.update()
 
@@ -163,6 +178,16 @@ def Loose():
     Menu1_surf = pygame.image.load('tiles\\Loose.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
+    pygame.display.update()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                # Завершаем работу модулей
+                pygame.quit()
+                # заврешаем работу программы
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                Menu1(width, height)
 
 
 def Menu2():
