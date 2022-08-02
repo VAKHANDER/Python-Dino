@@ -11,7 +11,7 @@ pygame.mixer.init()
 
 def Menu1(width, height):
     # загрузили изображение
-    Menu1_surf = pygame.image.load('tiles\\Menu1.png')
+    Menu1_surf = pygame.image.load('tiles\\Game\\Menu1.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
     # ----------------------------------------------Задание текста----------------------------------------------------------
@@ -47,7 +47,7 @@ def Menu1(width, height):
                     sys.exit()
                 if width / 2 - 50 <= mouse_pos[0] <= width / 2 + 20 and height / 2 <= mouse_pos[1] <= height / 2 + 50:
                     # загрузили изображение
-                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    tmp_surf = pygame.image.load('tiles\\Game\\tmp.png')
                     # Передали изображение в дисплей
                     screen.blit(tmp_surf, (0, 0))
                     Settings(width, height)
@@ -55,7 +55,7 @@ def Menu1(width, height):
                 if width / 2 - 25 <= mouse_pos[0] <= width / 2 + 20 and height / 2 - 160 <= mouse_pos[
                     1] <= height / 2 - 100:
                     # Завершаем работу модулей
-                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    tmp_surf = pygame.image.load('tiles\\Game\\tmp.png')
                     screen.blit(tmp_surf, (0, 0))
                     pygame.mixer.music.stop()
                     Game()
@@ -220,7 +220,7 @@ def Game():
 
 def Loose():
     # загрузили изображение
-    Menu1_surf = pygame.image.load('tiles\\Loose.png')
+    Menu1_surf = pygame.image.load('tiles\\Game\\Loose.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
     pygame.display.update()
@@ -237,7 +237,7 @@ def Loose():
 
 def Menu2():
     # загрузили изображение
-    Menu1_surf = pygame.image.load('tiles\\Menu2.png')
+    Menu1_surf = pygame.image.load('tiles\\Game\\Menu2.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
     pygame.display.update()
@@ -293,7 +293,7 @@ def Menu2():
 
 def Settings(width, height):
     # загрузили изображение
-    Menu1_surf = pygame.image.load('tiles\\Settings.png')
+    Menu1_surf = pygame.image.load('tiles\\Game\\Settings.png')
     # Передали изображение в дисплей
     screen.blit(Menu1_surf, (0, 0))
     # светлый оттенок кнопки
@@ -315,7 +315,7 @@ def Settings(width, height):
                 if (width / 2 - 600 <= mouse_pos[0] <= width / 2 - 550) and (
                         height / 2 - 300 < mouse_pos[1] < height / 2 - 250):
                     # загрузили изображение
-                    tmp_surf = pygame.image.load('tiles\\tmp.png')
+                    tmp_surf = pygame.image.load('tiles\\Game\\tmp.png')
                     # Передали изображение в дисплей
                     screen.blit(tmp_surf, (0, 0))
                     return width, height
@@ -377,4 +377,3 @@ screen = pygame.display.set_mode((width, height))
 # screen.blit(text, (x, y))
 # ----------------------------------------------------------------------------------------------------------------------
 Menu1(width, height)
-a = int(input())
